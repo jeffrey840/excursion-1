@@ -63,9 +63,18 @@
         });
     }
 
-    // Dataset: 1,000 images and words (mock example)
-    const images = Array.from({ length: 1000 }, (_, i) => `https://via.placeholder.com/300x200?text=Image${i}`);
-    const words = Array.from({ length: 1000 }, (_, i) => `word${i}`);
+    // Dataset: Images and corresponding words
+    const images = [
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/chair.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/cup.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/dog.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/fork.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/hat.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/pan.webp",
+        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/spoon.webp"
+    ];
+
+    const words = ["chair", "cup", "dog", "fork", "hat", "pan", "spoon"];
 
     // Precompute all game rounds
     const gameRounds = precomputeRounds(images, words);
