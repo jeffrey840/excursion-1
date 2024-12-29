@@ -46,44 +46,58 @@
     }
 
     // Precompute game rounds
-    function precomputeRounds(images, words) {
-        return images.map((image, index) => {
+    function precomputeRounds(dataset, translations) {
+        return dataset.map((entry) => {
             // Correct word for the image
-            const correctWord = words[index];
+            const correctWord = entry.word;
 
             // Randomly select 2 incorrect words
             const incorrectWords = shuffle(
-                    words.filter((word, i) => i !== index) // Exclude the correct word
+                    dataset
+                            .map(item => item.word)
+                            .filter(word => word !== correctWord) // Exclude the correct word
             ).slice(0, 2);
 
             // Combine correct word and incorrect words
             const options = shuffle([correctWord, ...incorrectWords]);
 
-            return { image, correctWord, options };
+            // Translate options to Spanish for display
+            const translatedOptions = options.map(word => translations[word]);
+
+            return { image: entry.image, correctWord, options, translatedOptions };
         });
     }
 
     // Dataset: Images and corresponding words
-    const images = [
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/chair.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/cup.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/dog.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/fork.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/hat.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/pan.webp",
-        "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/spoon.webp"
+    const dataset = [
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/chair.webp", word: "chair" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/cup.webp", word: "cup" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/dog.webp", word: "dog" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/fork.webp", word: "fork" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/hat.webp", word: "hat" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/pan.webp", word: "pan" },
+        { image: "https://raw.githubusercontent.com/jeffrey840/excursion-1/main/GameImg/spoon.webp", word: "spoon" }
     ];
 
-    const words = ["chair", "cup", "dog", "fork", "hat", "pan", "spoon"];
+    // English to Spanish translation map
+    const translations = {
+        chair: "silla",
+        cup: "taza",
+        dog: "perro",
+        fork: "tenedor",
+        hat: "sombrero",
+        pan: "sartén",
+        spoon: "cuchara"
+    };
 
     // Precompute all game rounds
-    const gameRounds = precomputeRounds(images, words);
+    const gameRounds = precomputeRounds(dataset, translations);
     let currentRoundIndex = 0;
 
     // Play the game
     function playGame() {
         if (currentRoundIndex >= gameRounds.length) {
-            document.getElementById('message').textContent = "You've completed the game!";
+            document.getElementById('message').textContent = "¡Has completado el juego!";
             document.getElementById('options').innerHTML = '';
             document.getElementById('image').style.display = 'none';
             return;
@@ -102,17 +116,17 @@
         messageElement.textContent = '';
 
         // Create buttons for options
-        currentRound.options.forEach(option => {
+        currentRound.translatedOptions.forEach((translatedOption, index) => {
             const button = document.createElement('button');
-            button.textContent = option;
+            button.textContent = translatedOption;
             button.addEventListener('click', () => {
-                if (option === currentRound.correctWord) {
-                    messageElement.textContent = 'Correct!';
+                if (currentRound.options[index] === currentRound.correctWord) {
+                    messageElement.textContent = '¡Correcto!';
                     messageElement.style.color = 'green';
                     currentRoundIndex++;
                     setTimeout(playGame, 1000); // Move to next round after 1 second
                 } else {
-                    messageElement.textContent = `Incorrect! Try again.`;
+                    messageElement.textContent = `¡Incorrecto! Intenta de nuevo.`;
                     messageElement.style.color = 'red';
                 }
             });
