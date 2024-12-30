@@ -16,15 +16,23 @@
             object-fit: cover;
             margin: 20px;
         }
+        .button-container {
+            display: inline-block; /* Stack buttons vertically */
+            margin-top: 20px; /* Add spacing above the button container */
+        }
         button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 25px;
+            display: block; /* Make each button a block element to stack them */
+            font-size: 24px; /* Make the text bigger */
+            margin: 10px 0; /* Add spacing between buttons */
+            padding: 15px 30px;
             cursor: pointer;
+            width: 50%; /* Set button width relative to the screen */
+            margin-left: auto;
+            margin-right: auto;
         }
         #message {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 24px; /* Make the message bigger */
             color: green;
         }
     </style>
