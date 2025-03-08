@@ -2,29 +2,95 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>hello</title>
+	<title>Image Navigator</title>
 	<style>
-        /* Arrow styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #76b1ce;
+        }
+        #imageDisplay {
+            display: block;
+            width: 80%; /* Adjust based on your layout needs */
+            margin: 20px auto;
+            height: auto;
+        }
         .arrow {
-            position: absolute;
-            top: 20px;
-            cursor: pointer;
             font-size: 24px;
             color: #333; /* Dark grey for visibility */
+            text-decoration: none; /* Removes underline from links */
+            padding: 10px 20px; /* Adds some padding for touch friendliness */
+            display: inline-block; /* Better control over layout */
+            margin: 10px; /* Spacing around arrows */
         }
-        .left-arrow {
+        .page-arrow { /* Arrows for page navigation */
+            position: fixed; /* Fixed at the top corner */
+            top: 20px;
+        }
+        .left-page-arrow {
             left: 20px;
         }
-        .right-arrow {
+        .right-page-arrow {
             right: 20px;
+        }
+        .image-arrow { /* Arrows for image toggling */
+            /* Positioned at the bottom of the image */
+            position: fixed;
+            bottom: 20px;
+        }
+        .left-image-arrow {
+            left: calc(50% - 120px); /* Positions left arrow to the left of center */
+        }
+        .right-image-arrow {
+            left: calc(50% + 100px); /* Positions right arrow to the right of center */
         }
 	</style>
 </head>
-
-
 <body>
 
-<a href="index.html" class="arrow left-arrow">&#8592; Left</a>
-<a href="sfa.html" class="arrow right-arrow">Right &#8594;</a>
+<!-- Page navigation arrows -->
+<a href="index.html" class="arrow page-arrow left-page-arrow">&#8592; Left</a>
+<a href="sfa.html" class="arrow page-arrow right-page-arrow">Right &#8594;</a>
+
+<!-- Image display -->
+<img id="imageDisplay" src="" alt="Image">
+
+<!-- Image toggling arrows -->
+<a href="#" class="arrow image-arrow left-image-arrow" onclick="changeImage(-1)">&#8592; Prev</a>
+<a href="#" class="arrow image-arrow right-image-arrow" onclick="changeImage(1)">Next &#8594;</a>
+
+<script>
+	let currentIndex = 0;
+	const images = [
+		"sfa_images/breakfast.webp",
+		"sfa_images/brushingTeeth.webp",
+		"sfa_images/drinking water.jpeg",
+		"sfa_images/driving.jpeg",
+		"sfa_images/fishing.jpeg",
+		"sfa_images/mountain biking.jpeg",
+		// Add more image paths as necessary
+	];
+
+	function updateImageDisplay() {
+		const imgElement = document.getElementById('imageDisplay');
+		imgElement.src = images[currentIndex];
+	}
+
+	function changeImage(direction) {
+		currentIndex += direction;
+		if (currentIndex >= images.length) {
+			currentIndex = 0; // Loop back to the first image
+		} else if (currentIndex < 0) {
+			currentIndex = images.length - 1; // Loop back to the last image
+		}
+		updateImageDisplay();
+	}
+
+	window.onload = () => { // Set the initial image on window load
+		updateImageDisplay();
+	};
+</script>
+
 </body>
 </html>
