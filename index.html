@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
+            background-color: #76b1ce;
         }
         img {
             width: 300px;
@@ -35,10 +36,27 @@
             font-size: 24px; /* Make the message bigger */
             color: green;
         }
+
+        /* Arrow styles */
+        .arrow {
+            position: absolute;
+            top: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333; /* Dark grey for visibility */
+        }
+        .left-arrow {
+            left: 20px;
+        }
+        .right-arrow {
+            right: 20px;
+        }
     </style>
 </head>
 <body>
 <h1></h1>
+<a href="index.html" class="arrow left-arrow">&#8592; Left</a>
+<a href="sfa.html" class="arrow right-arrow">Right &#8594;</a>
 <img id="image" src="" alt="Guess this image">
 <div id="options"></div>
 <div id="message"></div>
